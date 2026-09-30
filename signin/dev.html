@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">
+<title>Signing you in - Y5S1 Study Hub</title>
+<style>body{font:16px/1.5 system-ui,sans-serif;max-width:520px;margin:18vh auto;padding:0 20px;text-align:center;color:#1f1f1f}a{color:#1a73e8}</style>
+</head><body>
+<p id="msg">Signing you in to the Study Hub...</p>
+<p><a id="back" href="https://script.google.com/macros/s/AKfycbzQ3KZaG-xpzxBytlLLO4-lJUVGy8fXQhKccawpNog/dev">Back to the Study Hub</a></p>
+<script>
+(function () {
+  /* This page only passes Google's sign-in reply on to the hub (dev). It stores nothing and loads nothing. */
+  var TARGET = 'https://script.google.com/macros/s/AKfycbzQ3KZaG-xpzxBytlLLO4-lJUVGy8fXQhKccawpNog/dev';
+  var q = new URLSearchParams(location.search), out = new URLSearchParams();
+  var code = q.get('code') || '', state = q.get('state') || '', err = q.get('error') || '';
+  if (/^[A-Za-z0-9_-]{43}$/.test(state)) {
+    if (/^[A-Za-z0-9\/._-]{1,512}$/.test(code)) out.set('code', code);
+    else if (/^[a-z_]{1,64}$/.test(err)) out.set('error', err);
+    if (out.has('code') || out.has('error')) { out.set('state', state); location.replace(TARGET + '?' + out.toString()); return; }
+  }
+  document.getElementById('msg').textContent = 'Nothing to pass on here.';
+})();
+</script>
+</body></html>
